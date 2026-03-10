@@ -7,6 +7,7 @@ A weather-based health companion that helps users understand how current atmosph
 ## Inspiration
 
 After watching a family member struggle with unpredictable joint discomfort and some research on how weather conditions impacts joints, the goal was to give people a sense of predictability and control.
+
 ---
 
 ## What It Does
