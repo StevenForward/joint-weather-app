@@ -6,8 +6,7 @@ A weather-based health companion that helps users understand how current atmosph
 
 ## Inspiration
 
-This project was inspired by watching a close family member struggle with unpredictable joint discomfort — never quite knowing whether a given day would be a good one or a difficult one. The goal was simple: give people a sense of predictability and control, even in a small way.
-
+After watching a family member struggle with unpredictable joint discomfort and some research on how weather conditions impacts joints, the goal was to give people a sense of predictability and control.
 ---
 
 ## What It Does
