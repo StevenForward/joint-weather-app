@@ -1,4 +1,12 @@
 import { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  ActivityIndicator,
+} from "react-native";
 
 export default function LocationSearch({ onLocationSelect }) {
   const [query, setQuery] = useState("");
@@ -30,10 +38,6 @@ export default function LocationSearch({ onLocationSelect }) {
     }
   }
 
-  function handleKeyDown(e) {
-    if (e.key === "Enter") searchLocation();
-  }
-
   function handleSelect(result) {
     setResults([]);
     setQuery("");
@@ -45,39 +49,106 @@ export default function LocationSearch({ onLocationSelect }) {
   }
 
   return (
-    <div className="mb-8">
-      <div className="flex gap-2">
-        <input
-          type="text"
+    <View style={styles.container}>
+      <View style={styles.row}>
+        <TextInput
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onKeyDown={handleKeyDown}
+          onChangeText={setQuery}
+          onSubmitEditing={searchLocation}
           placeholder="Search for a city..."
-          className="flex-1 border border-gray-300 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+          placeholderTextColor="#9ca3af"
+          returnKeyType="search"
+          style={styles.input}
         />
-        <button
-          onClick={searchLocation}
-          className="bg-blue-600 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-blue-700 transition"
-        >
-          {loading ? "..." : "Search"}
-        </button>
-      </div>
+        <TouchableOpacity style={styles.button} onPress={searchLocation}>
+          {loading ? (
+            <ActivityIndicator color="#ffffff" size="small" />
+          ) : (
+            <Text style={styles.buttonText}>Search</Text>
+          )}
+        </TouchableOpacity>
+      </View>
 
-      {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+      {error && <Text style={styles.error}>{error}</Text>}
 
       {results.length > 0 && (
-        <ul className="bg-white border border-gray-200 rounded-xl mt-2 shadow-sm overflow-hidden">
-          {results.map((result) => (
-            <li
+        <View style={styles.results}>
+          {results.map((result, index) => (
+            <TouchableOpacity
               key={result.id}
-              onClick={() => handleSelect(result)}
-              className="px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 cursor-pointer border-b last:border-0"
+              onPress={() => handleSelect(result)}
+              style={[
+                styles.resultItem,
+                index < results.length - 1 && styles.resultBorder,
+              ]}
             >
-              {result.name}, {result.admin1 && `${result.admin1}, `}{result.country}
-            </li>
+              <Text style={styles.resultText}>
+                {result.name}
+                {result.admin1 ? `, ${result.admin1}` : ""}, {result.country}
+              </Text>
+            </TouchableOpacity>
           ))}
-        </ul>
+        </View>
       )}
-    </div>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    marginBottom: 32,
+  },
+  row: {
+    flexDirection: "row",
+    gap: 8,
+  },
+  input: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: "#d1d5db",
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    fontSize: 14,
+    backgroundColor: "#ffffff",
+    color: "#111827",
+  },
+  button: {
+    backgroundColor: "#2563eb",
+    paddingHorizontal: 20,
+    borderRadius: 12,
+    justifyContent: "center",
+    alignItems: "center",
+    minWidth: 72,
+  },
+  buttonText: {
+    color: "#ffffff",
+    fontSize: 14,
+    fontWeight: "500",
+  },
+  error: {
+    color: "#ef4444",
+    fontSize: 14,
+    marginTop: 8,
+  },
+  results: {
+    backgroundColor: "#ffffff",
+    borderWidth: 1,
+    borderColor: "#e5e7eb",
+    borderRadius: 12,
+    marginTop: 8,
+    overflow: "hidden",
+  },
+  resultItem: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+  },
+  resultBorder: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#f3f4f6",
+  },
+  resultText: {
+    fontSize: 14,
+    color: "#374151",
+  },
+});

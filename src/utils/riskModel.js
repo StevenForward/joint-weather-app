@@ -1,14 +1,17 @@
 // Weights based on research correlations
 // Pressure drop is the strongest predictor, followed by humidity and cold temp
 
-export function calculateRisk(pressure, humidity, temperature) {
+export function calculateRisk(pressure, humidity, temperature, pressureDelta) {
   let score = 0;
 
-  // --- Pressure (most heavily weighted) ---
-  // Normal range: 1013 hPa. Lower = higher risk.
-  if (pressure < 1000) score += 3;
-  else if (pressure < 1007) score += 2;
-  else if (pressure < 1013) score += 1;
+  // --- Pressure drop (strongest predictor, most heavily weighted) ---
+  // pressureDelta = today's avg minus yesterday's avg, so a drop is negative.
+  if (pressureDelta < -8) score += 3;
+  else if (pressureDelta < -4) score += 2;
+  else if (pressureDelta < -1) score += 1;
+
+  // --- Absolute pressure (minor secondary factor) ---
+  if (pressure < 1005) score += 1;
 
   // --- Humidity ---
   if (humidity > 80) score += 2;

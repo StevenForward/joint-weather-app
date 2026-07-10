@@ -1,4 +1,4 @@
-# Joint Weather App 🌦️
+# JointCast 🌦️
 
 A weather-based health companion that helps users understand how current atmospheric conditions may relate to joint and bone discomfort.
 
@@ -14,7 +14,7 @@ After watching a family member struggle with unpredictable joint discomfort and 
 
 The app takes a user's location, fetches real-time weather data (barometric pressure, humidity, and temperature), and surfaces a plain-language risk outlook — low, moderate, or high — indicating whether today's conditions are historically associated with increased joint discomfort.
 
-The emphasis is on **informed awareness**, not diagnosis. This app does not predict whether any individual will feel pain.
+The emphasis is on **informed awareness**, not diagnosis. This app does not predict whether a person will feel pain.
 
 ---
 
@@ -30,10 +30,9 @@ The solution was a **"soft expectations" model**: communicate increased probabil
 
 ## Tech Stack
 
-- **React + Vite** — frontend framework and build tool
-- **Tailwind CSS** — utility-first styling
+- **React Native (Expo)** — cross-platform mobile framework, targeting iPhone (iOS)
 - **Open-Meteo API** — free, open weather data (no API key required)
-- **i18next** — bilingual support (English / Spanish)
+- **Open-Meteo Geocoding API** — city search / location lookup
 
 ---
 
@@ -50,11 +49,16 @@ The solution was a **"soft expectations" model**: communicate increased probabil
 ## Running Locally
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/joint-weather-app.git
-cd joint-weather-app
+git clone https://github.com/YOUR_USERNAME/jointcast.git
+cd jointcast
 npm install
-npm run dev
+npm start
 ```
+
+Then scan the QR code from the terminal with the **Expo Go** app on your iPhone
+(App Store) to run it on a real device — no Mac required for development.
+To build a standalone iOS binary for the App Store, use
+[EAS Build](https://docs.expo.dev/build/introduction/) (`npx eas build -p ios`).
 
 ---
 

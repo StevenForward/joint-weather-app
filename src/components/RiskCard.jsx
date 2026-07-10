@@ -1,21 +1,26 @@
+import { View, Text, StyleSheet } from "react-native";
+
 const colorMap = {
   green: {
-    bg: "bg-green-50",
-    border: "border-green-400",
-    badge: "bg-green-100 text-green-800",
-    dot: "bg-green-500",
+    bg: "#f0fdf4",
+    border: "#4ade80",
+    badgeBg: "#dcfce7",
+    badgeText: "#166534",
+    dot: "#22c55e",
   },
   yellow: {
-    bg: "bg-yellow-50",
-    border: "border-yellow-400",
-    badge: "bg-yellow-100 text-yellow-800",
-    dot: "bg-yellow-500",
+    bg: "#fefce8",
+    border: "#facc15",
+    badgeBg: "#fef9c3",
+    badgeText: "#854d0e",
+    dot: "#eab308",
   },
   red: {
-    bg: "bg-red-50",
-    border: "border-red-400",
-    badge: "bg-red-100 text-red-800",
-    dot: "bg-red-500",
+    bg: "#fef2f2",
+    border: "#f87171",
+    badgeBg: "#fee2e2",
+    badgeText: "#991b1b",
+    dot: "#ef4444",
   },
 };
 
@@ -23,20 +28,75 @@ export default function RiskCard({ risk }) {
   const colors = colorMap[risk.color];
 
   return (
-    <div className={`rounded-2xl border-2 p-6 ${colors.bg} ${colors.border} shadow-sm`}>
-      <div className="flex items-center gap-3 mb-4">
-        <span className={`w-3 h-3 rounded-full ${colors.dot}`} />
-        <span className={`text-sm font-semibold px-3 py-1 rounded-full ${colors.badge}`}>
-          {risk.label}
-        </span>
-      </div>
-      <p className="text-gray-700 text-base mb-4">{risk.message}</p>
-      <div className="border-t pt-4 mt-2">
-        <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1">
-          What to do
-        </p>
-        <p className="text-gray-700 text-sm">{risk.advice}</p>
-      </div>
-    </div>
+    <View
+      style={[styles.card, { backgroundColor: colors.bg, borderColor: colors.border }]}
+    >
+      <View style={styles.header}>
+        <View style={[styles.dot, { backgroundColor: colors.dot }]} />
+        <View style={[styles.badge, { backgroundColor: colors.badgeBg }]}>
+          <Text style={[styles.badgeText, { color: colors.badgeText }]}>
+            {risk.label}
+          </Text>
+        </View>
+      </View>
+
+      <Text style={styles.message}>{risk.message}</Text>
+
+      <View style={styles.divider}>
+        <Text style={styles.sectionLabel}>What to do</Text>
+        <Text style={styles.advice}>{risk.advice}</Text>
+      </View>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  card: {
+    borderRadius: 20,
+    borderWidth: 2,
+    padding: 24,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    marginBottom: 16,
+  },
+  dot: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+  },
+  badge: {
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderRadius: 999,
+  },
+  badgeText: {
+    fontSize: 13,
+    fontWeight: "600",
+  },
+  message: {
+    color: "#374151",
+    fontSize: 16,
+    marginBottom: 16,
+  },
+  divider: {
+    borderTopWidth: 1,
+    borderTopColor: "#e5e7eb",
+    paddingTop: 16,
+    marginTop: 8,
+  },
+  sectionLabel: {
+    fontSize: 12,
+    fontWeight: "600",
+    color: "#6b7280",
+    textTransform: "uppercase",
+    letterSpacing: 1,
+    marginBottom: 4,
+  },
+  advice: {
+    color: "#374151",
+    fontSize: 14,
+  },
+});
